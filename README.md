@@ -8,7 +8,7 @@
 
 **[查看 Releases 和 Windows 资产](https://github.com/bobbanga/jc-response/releases)**。请选择 Assets 中的 `JC_response-windows-x64-1.2.0-r1.zip`，不要下载 GitHub 自动生成的 Source code ZIP 来安装。
 
-> 截至本次文档更新，Release 二进制上传尚未完成。没有看到该资产时就是尚未提供下载，不要猜下载地址或使用第三方镜像。维护者按[上传流程](docs/Release上传.md)发布并回下载校验后，更新[分发状态](releases/1.2.0-r1/distribution.json)。
+预发布页：[v1.2.0-r1](https://github.com/bobbanga/jc-response/releases/tag/v1.2.0-r1)。Windows 资产的直接地址是 [JC_response-windows-x64-1.2.0-r1.zip](https://github.com/bobbanga/jc-response/releases/download/v1.2.0-r1/JC_response-windows-x64-1.2.0-r1.zip)。这是 prerelease，不是稳定版，也不是 GitHub latest。维护者已用不带认证的下载核对大小和 SHA256，时间见[分发状态](releases/1.2.0-r1/distribution.json)。
 
 | 文件身份 | 固定值 |
 |---|---|
@@ -61,6 +61,6 @@ r1 没有重编译，1108 个 bin/ 文件保持不变。已有维护者报告的
 
 问题反馈使用 [GitHub Issues](https://github.com/bobbanga/jc-response/issues)。只提供版本、文件哈希、失败步骤和脱敏错误；不要附账号凭据、完整配置、数据库或业务 CSV。
 
-WorkBuddy 市场包尚在适配，**不能把本 Windows 大包直接上传到 20 MB 的连接器入口**。维护者任务：[Cursor 市场分发适配](docs/Cursor-WorkBuddy市场适配.md)。
+WorkBuddy 市场适配在独立分支，**还没有提交平台审核**。不能把这个 Windows 大包直接上传到 20 MB 的连接器入口。任务说明：[Cursor 市场分发适配](docs/Cursor-WorkBuddy市场适配.md)。
 
 维护者验证：`python -m unittest discover -s tests -v`。普通用户不用运行测试或重打包。二进制只做 Release Assets，不进入 Git 历史。

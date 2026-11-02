@@ -1,0 +1,10 @@
+{
+  "file_name": "JC_response-windows-x64-1.2.0-r1.zip",
+  "file_size": 122270089,
+  "sha256": "91b6df6dd4ae0ee4684c8d4946956ca2599294e118014837f3a339bb717be713",
+  "download_url": "https://github.com/bobbanga/jc-response/releases/download/v1.2.0-r1/JC_response-windows-x64-1.2.0-r1.zip",
+  "program_version": "1.2.0",
+  "package_revision": "r1",
+  "contract": "response_flow/1.1",
+  "exe_sha256": "d665c71273a99eddab01dcd38f6cd8d192a4d42b3bdf4be0e1da26f228cf810d"
+}
