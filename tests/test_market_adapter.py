@@ -66,7 +66,9 @@ class MarketAdapter(unittest.TestCase):
     def test_skill_keeps_the_product_contract(self):
         text = (ROOT / "skills/jc-response-preview/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("response_flow/1.1", text)
+        self.assertEqual(text.count("## 市场连接器和原来的自定义连接"), 1)
         self.assertIn("不要再执行 `--configure-workbuddy`", text)
+        self.assertIn("不要把这个参数写进日常启动参数", text)
         self.assertIn("不要调用全局 `jctrans`", text)
         self.assertNotIn("c:\\users\\hiabo", text.casefold())
 

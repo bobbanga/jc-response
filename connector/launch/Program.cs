@@ -40,6 +40,16 @@ internal static class Program
         catch (NotSupportedException)
         {
         }
+        if (args.Length > 0 && args[0] == "--evaluate-install-result")
+        {
+            int exitCode;
+            if (args.Length != 3 || !int.TryParse(args[1], out exitCode))
+            {
+                Console.Error.WriteLine("unknown_argument");
+                return 2;
+            }
+            return JudgeInstall(exitCode, args[2], null);
+        }
         bool install = false;
         bool refresh = false;
         for (int i = 0; i < args.Length; i++)
@@ -173,6 +183,43 @@ internal static class Program
             && Long(pin, "file_size") == ZipSize;
     }
 
+    static bool AcceptedInstallStatus(string status)
+    {
+        return status == "installed" || status == "already_installed" || status == "upgraded";
+    }
+
+    static int JudgeInstall(int exitCode, string status, string extractRoot)
+    {
+        if (string.IsNullOrEmpty(status)) status = "unreadable";
+        Console.Error.WriteLine("install_status=" + status);
+        Console.Error.WriteLine("install_exit=" + exitCode.ToString());
+        if (exitCode != 0 || !AcceptedInstallStatus(status))
+        {
+            Console.Error.WriteLine("install_rejected");
+            return 2;
+        }
+        if (!string.IsNullOrEmpty(extractRoot))
+        {
+            string local = Environment.GetEnvironmentVariable("LOCALAPPDATA");
+            string program = string.IsNullOrEmpty(local) ? "" : Path.Combine(local, "Programs", "JC_response");
+            if (!BinsMatch(Path.Combine(extractRoot, "bin"), Path.Combine(program, "bin")))
+            {
+                Console.Error.WriteLine("bin_mismatch");
+                Console.Error.WriteLine("install_rejected");
+                return 2;
+            }
+        }
+        string reason;
+        if (LocateMatchingExe(out reason) == null)
+        {
+            Console.Error.WriteLine(reason);
+            Console.Error.WriteLine("install_rejected");
+            return 2;
+        }
+        Console.Error.WriteLine("install_verified");
+        return 0;
+    }
+
     static int DownloadAndInstall()
     {
         string root = Path.Combine(Path.GetTempPath(), "jc-response-market-" + Guid.NewGuid().ToString("N"));
@@ -219,13 +266,11 @@ internal static class Program
             {
                 process.Kill();
                 Console.Error.WriteLine("install_status=timeout");
+                Console.Error.WriteLine("install_rejected");
                 return 2;
             }
             process.WaitForExit();
-            string status = StatusOf(stdout.ToString());
-            Console.Error.WriteLine("install_status=" + status);
-            if (status == "installed" || status == "already_installed" || status == "upgraded") return 0;
-            return 2;
+            return JudgeInstall(process.ExitCode, StatusOf(stdout.ToString()), extract);
         }
         finally
         {
