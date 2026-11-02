@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "jc-response",
+  "version": "1.0.0",
+  "description": "Windows connector for one bounded JC response batch. The runtime is a separate unsigned package.",
+  "author": {
+    "name": "JC Response"
+  },
+  "license": "See the public repository",
+  "keywords": [
+    "jc-response",
+    "responses"
+  ]
+}

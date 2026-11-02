@@ -1,0 +1,22 @@
+{
+  "name": "JC Response",
+  "name_zh": "JC 回盘助手",
+  "name_en": "JC Response Assistant",
+  "description": "Read one bounded batch from your own JC account on Windows.",
+  "description_zh": "在 Windows x64 上连接你自己的 JC 账号，按明确数量读取一批回盘。需要本机 Edge 和未签名的外部运行包，不是 JC 官方。",
+  "description_en": "On Windows x64, connect your own JC account and read one exact-size response batch. Requires local Edge and a separate unsigned runtime. Not a JC product.",
+  "source": "jc-response",
+  "type": "mcp",
+  "version": "1.0.0",
+  "minWorkbuddyVersion": "4.24.0",
+  "examples_zh": [
+    "连接我的 JC 账号",
+    "读取一批 5 条回盘，不保存",
+    "把刚才这批导出为 CSV"
+  ],
+  "examples_en": [
+    "Connect my JC account",
+    "Read one batch of 5 responses without saving",
+    "Export that same batch to CSV"
+  ]
+}

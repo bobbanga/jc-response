@@ -5,9 +5,9 @@
   "package_revision": "r1",
   "artifact_maturity": "candidate",
   "release_tag": "v1.2.0-r1",
-  "status": "upload_pending",
-  "release_url": null,
-  "download_url": null,
+  "status": "prerelease_published",
+  "release_url": "https://github.com/bobbanga/jc-response/releases/tag/v1.2.0-r1",
+  "download_url": "https://github.com/bobbanga/jc-response/releases/download/v1.2.0-r1/JC_response-windows-x64-1.2.0-r1.zip",
   "file_name": "JC_response-windows-x64-1.2.0-r1.zip",
   "file_size": 122270089,
   "sha256": "91b6df6dd4ae0ee4684c8d4946956ca2599294e118014837f3a339bb717be713",
@@ -15,7 +15,7 @@
   "binary_source_commit": null,
   "windows_validation_evidence": "maintainer_report",
   "validation_report": "WINDOWS_VALIDATION.md",
-  "public_download_verified": false,
-  "public_download_verified_at": null,
+  "public_download_verified": true,
+  "public_download_verified_at": "2026-11-02T00:45:51Z",
   "workbuddy_market_status": "not_submitted"
 }
