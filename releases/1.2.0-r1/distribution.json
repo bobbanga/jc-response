@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "product": "JC_response",
+  "program_version": "1.2.0",
+  "package_revision": "r1",
+  "artifact_maturity": "candidate",
+  "release_tag": "v1.2.0-r1",
+  "status": "upload_pending",
+  "release_url": null,
+  "download_url": null,
+  "file_name": "JC_response-windows-x64-1.2.0-r1.zip",
+  "file_size": 122270089,
+  "sha256": "91b6df6dd4ae0ee4684c8d4946956ca2599294e118014837f3a339bb717be713",
+  "signed": false,
+  "binary_source_commit": null,
+  "windows_validation_evidence": "maintainer_report",
+  "validation_report": "WINDOWS_VALIDATION.md",
+  "public_download_verified": false,
+  "public_download_verified_at": null,
+  "workbuddy_market_status": "not_submitted"
+}
