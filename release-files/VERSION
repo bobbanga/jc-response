@@ -1,0 +1,7 @@
+product=JC_response
+display_name=JC Response
+version=1.2.0
+csv=JC_response.csv
+schema=response_flow/1.1
+csv_schema=JC_response/1.1
+columns=30

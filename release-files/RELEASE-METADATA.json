@@ -1,0 +1,18 @@
+{
+  "metadata_schema": "1.0",
+  "product": "JC_response",
+  "program_version": "1.2.0",
+  "package_revision": "r1",
+  "contract_version": "response_flow/1.1",
+  "csv_schema": "JC_response/1.1",
+  "csv_columns": 30,
+  "release_status": "candidate",
+  "signed": false,
+  "binary_recompiled": false,
+  "binary_changes_from_input": 0,
+  "input_zip_sha256": "a042880a60bc3cadbbb3ffaf667c222cba6560a760b874271b9710c3e6254035",
+  "product_exe_sha256": "d665c71273a99eddab01dcd38f6cd8d192a4d42b3bdf4be0e1da26f228cf810d",
+  "binary_source_commit": null,
+  "windows_upgrade_validation": "NOT_RUN",
+  "download_url": ""
+}

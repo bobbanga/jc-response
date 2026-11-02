@@ -1,0 +1,15 @@
+*.zip
+*.exe
+*.dll
+*.pyd
+*.db
+*.sqlite*
+*.csv
+*.jsonl
+*.log
+.env*
+__pycache__/
+*.pyc
+/dist/
+/work/
+/.review/
