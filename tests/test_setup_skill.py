@@ -104,7 +104,10 @@ def test_names_and_generated_rules() -> None:
     source_map = json.loads((SKILL / "references" / "source-map.json").read_text(encoding="utf-8"))
     raw = SOURCE.read_bytes().replace(b"\r\n", b"\n")
     assert source_map["business_rules_source_sha256"] == hashlib.sha256(raw).hexdigest()
-    assert source_map["business_rules_source_commit"] == "2b69ad300ee2435e4432292ca2af9e26a1e83b3a"
+    assert source_map["business_rules_source_commit"] == "feat/business-csv-rules"
+    assert "JC_response_business/1.0" in rules
+    assert "1.2.0-r1" in rules
+    assert PIN["csv_schema"] == "JC_response/1.1"
     assert PIN["sha256"] == "91b6df6dd4ae0ee4684c8d4946956ca2599294e118014837f3a339bb717be713"
     assert PIN["file_size"] == 122270089
     script = SCRIPT.read_text(encoding="utf-8").casefold()

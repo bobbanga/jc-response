@@ -50,7 +50,7 @@ examples_en:
 ## 读取一批
 
 1. 数量必须由用户明确给出（1–20）。用户没说数量时先问，不要默认 20，也不要替用户决定。
-2. 调用 `jc_response_read_batch`，`limit` 填用户给的数量，默认 `mode=list_only`，`save=false`。只有用户明确要“详情/完整字段”才用 `mode=api_full`；只有用户明确要“保存”才 `save=true`。
+2. 调用 `jc_response_read_batch`，`limit` 填用户给的数量，默认 `mode=list_only`，`save=false`。`list_only` 只是清单预览，不能当成完整业务表。用户明确要求“读取 N 条并导出业务表”，且运费条款、贸易术语、件重体、报价有效期或联系人需要详情时，先说明要用 `mode=api_full`，数量仍是用户给出的 N，沿用已有预算，不另加逐批许可。只有用户明确要“保存”才 `save=true`。
 3. 已开通后，范围内的读取直接执行。不要因为客户端没有 elicitation 而拒绝，也不要让用户打开 JC Response 窗口领取这一批的许可。客户端自己的工具审批由宿主规则处理，产品不能保证每个客户端都没有任何提示。
 4. 返回 `budget_exceeded` 或 `busy` 时停止。不要等待额度恢复后自动循环，不要改页码、换会话或换客户端再试。
 5. 返回 `invalid_request` 时如实转述，让用户给出新的数量；不要自动改成更小或更大的数量。
@@ -62,7 +62,10 @@ examples_en:
 
 - “第 N 条”“这条详情”用 `jc_response_batch_detail`，传本批 `batch_id` 和 `position` 或 `response_id`。它不访问 JC；`detail_available=false` 时说明本批是 list_only，本次不会补抓。
 - “保存这一批”用 `jc_response_save_batch`。保存后 `data_state=saved`，其他已授权客户端可读取同一快照。
-- “导出 CSV”用 `jc_response_export_batch`。文件沿用 `JC_response.csv` v1 的 30 列契约（`csv_schema=JC_response/1.1`，默认文件名 `JC_response-<batch_id 前 12 位>.csv`），字段为空就保持为空。返回的是本机文件路径（`file_path`）、行数、`sha256`。不要把路径说成可点击下载链接；不要接受用户给的任意绝对路径；不要覆盖已有文件。
+- 清单预览和业务表导出分开。看清单用 `list_only`，不写文件，也不把结果说成完整业务表。
+- 只导出已经读过的一批时，用 `jc_response_export_batch` 和同一个 `batch_id`。导出不访问 JC。`list_only` 快照可以写出中文业务表，但 `completeness=partial`，详情列为空，原因在 `field_gaps`；表头齐全不是完整交付。
+- 未发布修复的业务表是 `csv_schema=JC_response_business/1.0`，恰好 30 个中文列，默认文件名 `JC_response-business-<batch_id 前 12 位>.csv`。已安装的 1.2.0-r1 仍写出旧技术表 `JC_response/1.1`。看到旧 schema 时说明当前安装还没有中文业务表，不要改走全局 CLI，也不要声称已经交付。
+- 返回本机文件路径（`file_path`）、行数、`sha256` 和列覆盖。不要把路径说成可点击下载链接；不要接受任意绝对路径；不要覆盖已有文件。旧技术文件不能当作新业务表重放。空字段保持为空。备注里的价格文字不是参考报价、币种或有效期。
 - `result_expired` 表示临时结果已失效（进程退出或超时）。如实说明，并询问用户是否重新读取；不要自动重读。
 
 ## 下一批

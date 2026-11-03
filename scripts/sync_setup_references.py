@@ -11,7 +11,7 @@ SOURCE = ROOT / "skills" / "jc-response-preview" / "SKILL.md"
 TARGET = ROOT / "skills" / "jc-response-setup" / "references" / "business-rules.md"
 PIN = ROOT / "skills" / "jc-response-setup" / "references" / "runtime-pin.json"
 SOURCE_MAP = ROOT / "skills" / "jc-response-setup" / "references" / "source-map.json"
-COMMIT = "2b69ad300ee2435e4432292ca2af9e26a1e83b3a"
+COMMIT = "feat/business-csv-rules"
 
 
 def body_of(text: str) -> str:
@@ -42,7 +42,7 @@ def main() -> None:
         "# 业务规则\n\n"
         "本文件由权威 Skill `skills/jc-response-preview/SKILL.md` 生成，供 JC回盘助手按需阅读。"
         "它不是第二份 Skill，没有自己的 frontmatter，也不改变 MCP 名称、工具名或契约。\n\n"
-        f"来源提交：{COMMIT}\n\n"
+        f"来源标识：{COMMIT}。权威是下方来源 SHA256，不是已发布程序版本。\n\n"
         "来源文件：skills/jc-response-preview/SKILL.md\n\n"
         f"来源 SHA256：{sha256(raw)}\n\n"
         "---\n\n"
