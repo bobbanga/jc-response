@@ -8,7 +8,7 @@
 
 **[查看 Releases 和 Windows 资产](https://github.com/bobbanga/jc-response/releases)**。请选择 Assets 中的 `JC_response-windows-x64-1.2.0-r1.zip`，不要下载 GitHub 自动生成的 Source code ZIP 来安装。
 
-预发布标签 [v1.2.0-r1](https://github.com/bobbanga/jc-response/releases/tag/v1.2.0-r1) 已提供 Windows 资产，不是稳定版，也不是 `latest`。只使用该标签下的固定 ZIP，不要改用其他地址或镜像。状态见[分发记录](releases/1.2.0-r1/distribution.json)。
+预发布标签 [v1.2.0-r1](https://github.com/bobbanga/jc-response/releases/tag/v1.2.0-r1) 已提供 Windows 资产，不是稳定版，也不是 `latest`。只使用该标签下的固定 ZIP，不要改用其他地址或镜像。状态见[分发记录](releases/1.2.0-r1/distribution.json)。这份已发布的包导出技术表 `JC_response/1.1`。`response_flow/1.1` 不能单独证明中文业务导出。中文业务表 `JC_response_business/1.0` 在尚未发布的 1.3.0 候选包里，目前没有公开下载地址。
 
 | 文件身份 | 固定值 |
 |---|---|
@@ -19,7 +19,7 @@
 
 r1 没有重编译，1108 个 bin/ 文件保持不变。已有维护者报告的新装、重复安装、资料刷新和 WorkBuddy 状态验证；本版的完整真实读取/导出、文件占用失败测试仍未在该报告中完成。详见[验收补充](releases/1.2.0-r1/WINDOWS_VALIDATION.md)。
 
-候选 Skill「JC回盘助手」在 `skills/jc-response-setup/`，技术标识 `jc-response-setup`，版本 0.1.0，尚未上架。它负责安装编排、提问教学，并引用现有业务 Skill 的规则。业务 MCP 名称仍是 `jc-response`。不要把这个候选包当成已经通过市场审核。
+候选 Skill「JC回盘助手」在 `skills/jc-response-setup/`，技术标识 `jc-response-setup`，版本 0.2.0，尚未上架，也尚不可提审。它锁定未发布的 1.3.0 候选包：下载地址为空，导出 schema 为 `JC_response_business/1.0`。已安装的 v1.2.0-r1 只能输出技术表，看到它时要提示升级，不能当成中文导出已经满足。业务 MCP 名称仍是 `jc-response`。
 
 ## 第一次使用
 

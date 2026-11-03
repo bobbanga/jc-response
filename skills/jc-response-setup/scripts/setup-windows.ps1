@@ -13,10 +13,13 @@ function Get-SetupPin {
     $serializer.MaxJsonLength = 67108864
     $serializer.RecursionLimit = 64
     $pin = $serializer.DeserializeObject([System.IO.File]::ReadAllText($path))
-    $url = [Uri]$pin["download_url"]
-    if ($url.Scheme -ne "https" -or $url.Host -ne "github.com") { throw "pin url rejected" }
+    $urlText = [string]$pin["download_url"]
+    if ($urlText) {
+        $url = [Uri]$urlText
+        if ($url.Scheme -ne "https" -or $url.Host -ne "github.com") { throw "pin url rejected" }
+    }
     if ([string]$pin["sha256"] -notmatch "^[0-9a-f]{64}$") { throw "pin hash rejected" }
-    if ([int64]$pin["file_size"] -ne 122270089) { throw "pin size rejected" }
+    if ([int64]$pin["file_size"] -le 0) { throw "pin size rejected" }
     return $pin
 }
 
@@ -33,12 +36,14 @@ function Get-FileSha256([string]$Path) {
 function Read-VersionFile([string]$Path) {
     $version = ""
     $contract = ""
-    if (-not (Test-Path -LiteralPath $Path)) { return @{ version = ""; contract = "" } }
+    $csv = ""
+    if (-not (Test-Path -LiteralPath $Path)) { return @{ version = ""; contract = ""; csv_schema = "" } }
     foreach ($line in [System.IO.File]::ReadAllLines($Path)) {
         if ($line.StartsWith("version=")) { $version = $line.Substring(8).Trim() }
         if ($line.StartsWith("schema=")) { $contract = $line.Substring(7).Trim() }
+        if ($line.StartsWith("csv_schema=")) { $csv = $line.Substring(11).Trim() }
     }
-    return @{ version = $version; contract = $contract }
+    return @{ version = $version; contract = $contract; csv_schema = $csv }
 }
 
 function Test-SumsFile([string]$Root, [string]$SumsPath) {
@@ -80,6 +85,8 @@ function Get-ProgramClass([string]$Root, $Pin) {
         return "unknown"
     }
     if ($info.contract -ne [string]$Pin["contract"]) { return "unknown" }
+    $expectedCsv = [string]$Pin["csv_schema"]
+    if ($expectedCsv -and $info.csv_schema -ne $expectedCsv) { return "unknown" }
     $sums = Join-Path $Root "SHA256SUMS.txt"
     if ((Test-Path -LiteralPath $sums -PathType Leaf) -and (Get-FileSha256 $sums) -eq [string]$Pin["sums_sha256"] -and (Test-SumsFile $Root $sums)) {
         return "match"
@@ -376,6 +383,7 @@ function Invoke-Setup {
     if ($class -eq "different_version" -or $class -eq "unknown" -or $class -eq "reparse" -or $class -eq "mixed") {
         Write-Output "install=stopped"; Write-Output "downloaded=0"; return 4
     }
+    if (-not [string]$pin["download_url"]) { Write-Output "download=unpublished"; Write-Output "downloaded=0"; return 3 }
     $temp = Join-Path $env:TEMP ("jc-response-setup-" + [guid]::NewGuid().ToString("N"))
     New-Item -ItemType Directory -Path $temp | Out-Null
     try {

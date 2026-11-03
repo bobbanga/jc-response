@@ -6,7 +6,7 @@
 
 来源文件：skills/jc-response-preview/SKILL.md
 
-来源 SHA256：c0c4b5e53c35fa38868659c489eb7f15ed4a282ee37f6f290167e5f7565b8db1
+来源 SHA256：c05a4259a4a590114c2cf2443e01a6497f9bac47375eb5dc5dea5bfeb5c06a74
 
 ---
 
@@ -53,7 +53,7 @@
 - “保存这一批”用 `jc_response_save_batch`。保存后 `data_state=saved`，其他已授权客户端可读取同一快照。
 - 清单预览和业务表导出分开。看清单用 `list_only`，不写文件，也不把结果说成完整业务表。
 - 只导出已经读过的一批时，用 `jc_response_export_batch` 和同一个 `batch_id`。导出不访问 JC。`list_only` 快照可以写出中文业务表，但 `completeness=partial`，详情列为空，原因在 `field_gaps`；表头齐全不是完整交付。
-- 未发布修复的业务表是 `csv_schema=JC_response_business/1.0`，恰好 30 个中文列，默认文件名 `JC_response-business-<batch_id 前 12 位>.csv`。中文业务表待新运行包支持。当前下载对象仍是 v1.2.0-r1，安装后得到的仍是旧技术表 `JC_response/1.1`。看到旧 schema 时说明当前安装还没有中文业务表，不要改走全局 CLI，也不要声称已经交付。
+- 候选程序 1.3.0 的默认业务导出是 `csv_schema=JC_response_business/1.0`，恰好 30 个中文列，默认文件名 `JC_response-business-<batch_id 前 12 位>.csv`。对话契约 `response_flow/1.1` 不能单独证明中文导出，要以这次返回的 `csv_schema` 为准。已安装的 v1.2.0-r1 只有旧技术表 `JC_response/1.1`；看到旧 schema 或缺省 `csv_schema` 时提示升级，不要当成已经满足中文导出。1.3.0 尚未公开下载，不要编造下载地址，也不要覆盖正式安装。
 - 返回本机文件路径（`file_path`）、行数、`sha256` 和列覆盖。不要把路径说成可点击下载链接；不要接受任意绝对路径；不要覆盖已有文件。旧技术文件不能当作新业务表重放。空字段保持为空。备注里的价格文字不是参考报价、币种或有效期。
 - `result_expired` 表示临时结果已失效（进程退出或超时）。如实说明，并询问用户是否重新读取；不要自动重读。
 

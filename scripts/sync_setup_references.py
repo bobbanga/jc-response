@@ -51,7 +51,7 @@ def main() -> None:
     rules_hash = sha256((header + body).encode("utf-8"))
     payload = {
         "skill_id": "jc-response-setup",
-        "skill_version": "0.1.0",
+        "skill_version": "0.2.0",
         "skill_maturity": "candidate",
         "display_name": "JC回盘助手",
         "display_name_en": "JC Response Assistant",
@@ -62,6 +62,8 @@ def main() -> None:
         "business_rules_body_sha256": sha256(body.encode("utf-8")),
         "business_rules_file_sha256": rules_hash,
         "runtime_pin_sha256": sha256(PIN.read_bytes().replace(b"\r\n", b"\n")),
+        "review_ready": False,
+        "published_download": False,
         "market_adapter_not_included": True,
         "market_adapter_source_seen": "8352547331fb4838715a50095dfeeaeb959ecc52",
         "docs_checked_on": "2026-11-03",
