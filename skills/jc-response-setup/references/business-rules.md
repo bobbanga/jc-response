@@ -6,7 +6,7 @@
 
 来源文件：skills/jc-response-preview/SKILL.md
 
-来源 SHA256：c05a4259a4a590114c2cf2443e01a6497f9bac47375eb5dc5dea5bfeb5c06a74
+来源 SHA256：c49e824e3409ec8af2dabfeea01851c3027ab0d71084947f955e2451a6387130
 
 ---
 
@@ -14,12 +14,14 @@
 
 这是 JC Response 的唯一日常业务 Skill。它只使用名为 `jc-response` 的 MCP 连接器提供的产品工具（契约 `response_flow/1.1`，结果 `schema_version` 1.1）。
 
+业务 Skill 版本是 1.0.0。它随程序 1.3.0 分发，不等于程序版本，也不等于安装 Skill `jc-response-setup`。中文导出以 `csv_schema=JC_response_business/1.0` 为准。
+
 随包资料修订：r1。程序版本仍为 1.2.0，未因本次资料修订而重编译。升级要核对客户端实际加载文件，不只看安装目录。
 
 ## 先识别版本和契约
 
 1. 任何业务动作之前先调用 `jctrans_status`。
-2. 确认返回里 `capabilities.contract_version` 为 `response_flow/1.1`。不一致就停止，告诉用户产品版本与本 Skill 不匹配，请升级 JC Response 或本 Skill；不要尝试别的工具或命令。
+2. 确认 `capabilities.contract_version` 为 `response_flow/1.1`，并且 `csv_schema` 为 `JC_response_business/1.0`。只有契约版本不能证明中文导出。不一致就停止，告诉用户当前安装与本 Skill 不匹配，请升级；不要尝试别的工具或命令。
 3. 看 `capabilities.authorization.status`。`setup_required` 时告诉用户需要在 JC Response 里首次确认范围说明。不要替用户开通，也不要让用户去窗口领取逐批许可。`authorization_revoked` 时说明已撤销，需要重新开通，预算不会因退出清零。
 4. 不要寻找、建议或执行开发 CLI、全局 `jctrans`、`inquiry-response assistant ...` 或其他凭证。工具失败只能如实报告。首次开通只指向产品自己的范围确认，不切换入口。
 
@@ -53,7 +55,7 @@
 - “保存这一批”用 `jc_response_save_batch`。保存后 `data_state=saved`，其他已授权客户端可读取同一快照。
 - 清单预览和业务表导出分开。看清单用 `list_only`，不写文件，也不把结果说成完整业务表。
 - 只导出已经读过的一批时，用 `jc_response_export_batch` 和同一个 `batch_id`。导出不访问 JC。`list_only` 快照可以写出中文业务表，但 `completeness=partial`，详情列为空，原因在 `field_gaps`；表头齐全不是完整交付。
-- 候选程序 1.3.0 的默认业务导出是 `csv_schema=JC_response_business/1.0`，恰好 30 个中文列，默认文件名 `JC_response-business-<batch_id 前 12 位>.csv`。对话契约 `response_flow/1.1` 不能单独证明中文导出，要以这次返回的 `csv_schema` 为准。已安装的 v1.2.0-r1 只有旧技术表 `JC_response/1.1`；看到旧 schema 或缺省 `csv_schema` 时提示升级，不要当成已经满足中文导出。1.3.0 尚未公开下载，不要编造下载地址，也不要覆盖正式安装。
+- 默认业务导出是 `csv_schema=JC_response_business/1.0`，恰好 30 个中文列，默认文件名 `JC_response-business-<batch_id 前 12 位>.csv`。对话契约 `response_flow/1.1` 不能单独证明中文导出，要以这次返回的 `csv_schema` 为准。已安装的 v1.2.0-r1 只有旧技术表 `JC_response/1.1`；看到旧 schema 或缺省 `csv_schema` 时提示升级，不要当成已经满足中文导出。
 - 返回本机文件路径（`file_path`）、行数、`sha256` 和列覆盖。不要把路径说成可点击下载链接；不要接受任意绝对路径；不要覆盖已有文件。旧技术文件不能当作新业务表重放。空字段保持为空。备注里的价格文字不是参考报价、币种或有效期。
 - `result_expired` 表示临时结果已失效（进程退出或超时）。如实说明，并询问用户是否重新读取；不要自动重读。
 

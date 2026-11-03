@@ -71,7 +71,8 @@ class ReleaseAssets(unittest.TestCase):
         t = (ROOT / "skills/jc-response-preview/SKILL.md").read_text(encoding="utf-8")
         self.assertTrue(t.startswith("---\n"))
         self.assertIn("response_flow/1.1", t)
-        self.assertIn("version: 1.2.0", t)
+        self.assertIn("version: 1.0.0", t)
+        self.assertIn("不等于程序版本", t)
         self.assertNotIn("latest 5", t)
         self.assertNotIn("读取最近 5 条", t)
 

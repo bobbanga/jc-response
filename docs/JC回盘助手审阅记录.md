@@ -1,6 +1,6 @@
 # JC回盘助手审阅记录
 
-日期：2026-11-03。当前候选 Skill 0.2.0，尚不可提审。没有 push、merge、发布或提交 WorkBuddy 审核。
+日期：2026-11-04。当前候选 Skill 0.2.1，尚不可提审。没有 push、merge、发布或提交 WorkBuddy 审核。
 
 2026-11-03 再次核对 https://open.workbuddy.cn/docs/skill 。必填 frontmatter 仍是 name、display_name、display_name_en、description、description_zh、description_en、version、author。`allowed-tools` 可选。引用方式仍是 `@references/xxx.md`。页面没有给出技能 ZIP 的字节上限。
 
@@ -19,7 +19,7 @@
 
 ## 运行包
 
-固定身份在 `skills/jc-response-setup/references/runtime-pin.json`。当前锁定尚未发布的 1.3.0 候选：`JC_response-windows-x64-1.3.0.zip`，122397333 字节，SHA256 `3c4dc966c07d82722d4fbde9ed8542a55375ec16d3a85cdd26abbfe80598dc3e`，三个 EXE `5a65927202043b605c48019ae552b110612c68600b745fb33af14764de4e9ff3`，`csv_schema` 为 `JC_response_business/1.0`，下载地址为空。已发布的 v1.2.0-r1 仍是 122270089 字节、SHA256 `91b6df6dd4ae0ee4684c8d4946956ca2599294e118014837f3a339bb717be713`，只输出技术表。市场适配提交 `8352547331fb4838715a50095dfeeaeb959ecc52` 只作为已见记录，没有并入。
+固定身份在 `skills/jc-response-setup/references/runtime-pin.json`。当前锁定尚未公开的资料修订包 `JC_response-windows-x64-1.3.0-r1.zip`，122402043 字节，SHA256 `1bdb2fdd5df0bdc630980784a8bcdd5fce3199a5c67aeeff2970d2fb647b32be`。程序仍是 1.3.0，三个 EXE 仍是 `5a65927202043b605c48019ae552b110612c68600b745fb33af14764de4e9ff3`，`csv_schema` 为 `JC_response_business/1.0`，下载地址为空。先前那份 122397333 字节、SHA256 `3c4dc966c07d82722d4fbde9ed8542a55375ec16d3a85cdd26abbfe80598dc3e` 的包因随包说明回退，不再作为发布对象。已发布的 v1.2.0-r1 仍是 122270089 字节、SHA256 `91b6df6dd4ae0ee4684c8d4946956ca2599294e118014837f3a339bb717be713`，只输出技术表。市场适配提交 `8352547331fb4838715a50095dfeeaeb959ecc52` 只作为已见记录，没有并入。
 
 ## 自动测试
 

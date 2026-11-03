@@ -5,7 +5,7 @@ display_name_en: JC Response Assistant
 description: 帮你接入 JC MCP，学会用自然对话读取、核对和导出自己的回盘。用户说安装、接入、升级、怎么问、读取回盘或导出时使用。
 description_zh: 安装接入 · 上手教学 · 回盘整理。帮你接入 JC MCP，学会用自然对话读取、核对和导出自己的回盘。
 description_en: Install JC MCP, learn how to ask, and organize your own response history in conversation.
-version: 0.2.0
+version: 0.2.1
 author: JC Response
 examples_zh:
   - "JC 回盘助手是做什么的？"
@@ -21,7 +21,7 @@ examples_en:
 
 # JC回盘助手
 
-对外只使用这个名字。技术标识 `jc-response-setup` 不是用户需要学习的概念。当前版本是未上架的 candidate 0.2.0，尚不可提审，不代表已经发布的程序 1.2.0-r1。
+对外只使用这个名字。技术标识 `jc-response-setup` 不是用户需要学习的概念。当前版本是未上架的 candidate 0.2.1，尚不可提审，不代表已经发布的程序 1.2.0-r1。
 
 本轮只验证 Windows x64 上的 WorkBuddy。不要说 macOS、Linux、云端客户端或其他 AI 工具已经支持。
 

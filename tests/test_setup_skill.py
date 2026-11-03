@@ -84,7 +84,7 @@ def test_names_and_generated_rules() -> None:
     assert "display_name: JC回盘助手" in text
     assert "display_name_en: JC Response Assistant" in text
     assert "name: jc-response-setup" in text
-    assert "version: 0.2.0" in text
+    assert "version: 0.2.1" in text
     assert "尚不可提审" in text
     assert "allowed-tools:" not in text
     for name in (
@@ -113,10 +113,12 @@ def test_names_and_generated_rules() -> None:
     assert PIN["contract"] == "response_flow/1.1"
     assert PIN["download_url"] == ""
     assert PIN["published"] is False
-    assert PIN["sha256"] == "3c4dc966c07d82722d4fbde9ed8542a55375ec16d3a85cdd26abbfe80598dc3e"
-    assert PIN["file_size"] == 122397333
+    assert PIN["file_name"] == "JC_response-windows-x64-1.3.0-r1.zip"
+    assert PIN["package_revision"] == "r1"
+    assert PIN["sha256"] == "1bdb2fdd5df0bdc630980784a8bcdd5fce3199a5c67aeeff2970d2fb647b32be"
+    assert PIN["file_size"] == 122402043
     assert PIN["exe_sha256"] == "5a65927202043b605c48019ae552b110612c68600b745fb33af14764de4e9ff3"
-    assert source_map["skill_version"] == "0.2.0"
+    assert source_map["skill_version"] == "0.2.1"
     assert source_map["review_ready"] is False
     assert source_map["published_download"] is False
     script = SCRIPT.read_text(encoding="utf-8").casefold()

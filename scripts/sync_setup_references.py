@@ -51,7 +51,7 @@ def main() -> None:
     rules_hash = sha256((header + body).encode("utf-8"))
     payload = {
         "skill_id": "jc-response-setup",
-        "skill_version": "0.2.0",
+        "skill_version": "0.2.1",
         "skill_maturity": "candidate",
         "display_name": "JC回盘助手",
         "display_name_en": "JC Response Assistant",
