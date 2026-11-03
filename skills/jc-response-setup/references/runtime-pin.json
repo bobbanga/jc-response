@@ -1,0 +1,37 @@
+{
+  "schema": "jc-response-setup-pin/1",
+  "release_tag": "v1.2.0-r1",
+  "file_name": "JC_response-windows-x64-1.2.0-r1.zip",
+  "file_size": 122270089,
+  "sha256": "91b6df6dd4ae0ee4684c8d4946956ca2599294e118014837f3a339bb717be713",
+  "download_url": "https://github.com/bobbanga/jc-response/releases/download/v1.2.0-r1/JC_response-windows-x64-1.2.0-r1.zip",
+  "sums_sha256": "0d08353a448b25c5732aec625efa701da9909e4a9cd10a2a2484d522cda910a5",
+  "exe_sha256": "d665c71273a99eddab01dcd38f6cd8d192a4d42b3bdf4be0e1da26f228cf810d",
+  "exe_names": ["JC_response.exe", "jctrans.exe", "jctrans-mcp.exe"],
+  "program_version": "1.2.0",
+  "package_revision": "r1",
+  "contract": "response_flow/1.1",
+  "csv_schema": "JC_response/1.1",
+  "csv_columns": 30,
+  "signed": false,
+  "allowed_hosts": [
+    "github.com",
+    "objects.githubusercontent.com",
+    "release-assets.githubusercontent.com",
+    "github-releases.githubusercontent.com"
+  ],
+  "doc_files": [
+    "docs/安装说明.md",
+    "docs/使用说明.md",
+    "docs/安全说明.md",
+    "docs/接入提示词.md",
+    "docs/升级说明.md",
+    "skills/jc-response-preview/SKILL.md",
+    "VERSION",
+    "RELEASE-METADATA.json",
+    "SHA256SUMS.txt"
+  ],
+  "accepted_install_status": ["installed", "already_installed", "upgraded"],
+  "accepted_configure_status": ["configured", "already_configured"],
+  "stop_status": ["conflict", "target_in_use", "target_has_data", "install_required"]
+}

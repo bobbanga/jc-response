@@ -1,0 +1,23 @@
+{
+  "skill_id": "jc-response-setup",
+  "skill_version": "0.1.0",
+  "skill_maturity": "candidate",
+  "display_name": "JC回盘助手",
+  "display_name_en": "JC Response Assistant",
+  "subtitle": "安装接入 · 上手教学 · 回盘整理",
+  "business_rules_source_commit": "2b69ad300ee2435e4432292ca2af9e26a1e83b3a",
+  "business_rules_source_path": "skills/jc-response-preview/SKILL.md",
+  "business_rules_source_sha256": "6bb37889b08c302f4dcfce5839d4a859555f30c546f43bc439e39df23d0181bc",
+  "business_rules_body_sha256": "3e2d6cffcea8d0dfbc6530af5c7c04373e72286e6a37e57959552d449341d1ad",
+  "business_rules_file_sha256": "4bec515a6738fd40fca51c79c8482e00c4e9cc74f1d35a8150208530a8eac9c2",
+  "runtime_pin_sha256": "369891bf2b228166b58f70cb3078ddd6f847a25ccc52647e79979838f341c493",
+  "market_adapter_not_included": true,
+  "market_adapter_source_seen": "8352547331fb4838715a50095dfeeaeb959ecc52",
+  "docs_checked_on": "2026-11-03",
+  "docs_checked": [
+    "https://open.workbuddy.cn/docs/skill",
+    "https://open.workbuddy.cn/docs/developer-agreement",
+    "https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Skills-Market",
+    "https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/MCP-Guide"
+  ]
+}
