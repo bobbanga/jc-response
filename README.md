@@ -11,7 +11,7 @@
 
 **SkillHub 已提交审核，尚未通过。** slug 是 `jc-response-setup-user-8aa5619a`，版本 0.2.3，skillId `307637`。审核页：[https://skillhub.cn/skills/jc-response-setup-user-8aa5619a](https://skillhub.cn/skills/jc-response-setup-user-8aa5619a)。SkillHub 不接收 PNG，所以上传包去掉了 `references/market-icon.png`；GitHub 源包仍保留补齐原图的要求。通过前，这个链接可能还不能打开完整详情。
 
-**本次源同步为草稿PR：原PNG图标尚待补传，Skill成品ZIP尚未上传Release。** 补齐前，仓库打包命令会拒绝缺失资源，不生成不完整替代包。已有完整上架ZIP的身份如下，不要猜GitHub下载地址。
+**原PNG已按已审核 ZIP 补入仓库。Skill 成品 ZIP 仍未上传 Release。** 仓库打包结果与已审核 ZIP 的大小和 SHA256 一致；GitHub Release 资产仍待单独上传。已有完整上架ZIP的身份如下，不要猜GitHub下载地址。
 
 - Skill文件：`jc-response-setup-0.2.3.zip`，**234614 字节**。
 - Skill SHA256：`a86a58a26831e60a05247797cde92c78ea1543faf2c8e0145b4786d73ae70e42`。
