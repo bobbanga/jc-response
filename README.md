@@ -4,11 +4,15 @@
 
 ## 下载与当前状态
 
-面向能下载 ZIP、解压和核对文件的 Windows 用户。程序版本 **1.2.0**，包修订 **r1**，契约 **response_flow/1.1**，当前是**未签名候选包，不是稳定版承诺**。
+面向能下载 ZIP、解压和核对文件的 Windows 用户。当前程序版本 **1.3.0**，包修订 **r2**，契约 **response_flow/1.1**，导出 **JC_response_business/1.0**。它是**未签名预发布，不是稳定版承诺**。
 
-**[查看 Releases 和 Windows 资产](https://github.com/bobbanga/jc-response/releases)**。请选择 Assets 中的 `JC_response-windows-x64-1.2.0-r1.zip`，不要下载 GitHub 自动生成的 Source code ZIP 来安装。
+**[查看 Releases 和 Windows 资产](https://github.com/bobbanga/jc-response/releases)**。请选择 Assets 中的 `JC_response-windows-x64-1.3.0-r2.zip`，不要下载 GitHub 自动生成的 Source code ZIP 来安装。
 
-预发布标签 [v1.2.0-r1](https://github.com/bobbanga/jc-response/releases/tag/v1.2.0-r1) 已提供 Windows 资产，不是稳定版，也不是 `latest`。只使用该标签下的固定 ZIP，不要改用其他地址或镜像。状态见[分发记录](releases/1.2.0-r1/distribution.json)。这份已发布的包导出技术表 `JC_response/1.1`。`response_flow/1.1` 不能单独证明中文业务导出。中文业务表 `JC_response_business/1.0` 在尚未发布的 1.3.0 候选包里，目前没有公开下载地址。
+当前 Windows 预发布是 [v1.3.0-r2](https://github.com/bobbanga/jc-response/releases/tag/v1.3.0-r2)，不是稳定版，也不是 `latest`。下载 Assets 中的 `JC_response-windows-x64-1.3.0-r2.zip`，122402084 字节，SHA256 `747a62e46af7177cb6364461f7edc776a0797652e3e423570109b3da7c47f9c9`。它导出中文业务表 `JC_response_business/1.0`。状态见[分发记录](releases/1.3.0-r2/distribution.json)。
+
+此前的 [v1.2.0-r1](https://github.com/bobbanga/jc-response/releases/tag/v1.2.0-r1) 仍然保留，只输出技术表 `JC_response/1.1`。`response_flow/1.1` 不能单独证明中文业务导出。
+
+已保留的 v1.2.0-r1 身份：
 
 | 文件身份 | 固定值 |
 |---|---|
@@ -19,7 +23,7 @@
 
 r1 没有重编译，1108 个 bin/ 文件保持不变。已有维护者报告的新装、重复安装、资料刷新和 WorkBuddy 状态验证；本版的完整真实读取/导出、文件占用失败测试仍未在该报告中完成。详见[验收补充](releases/1.2.0-r1/WINDOWS_VALIDATION.md)。
 
-候选 Skill「JC回盘助手」在 `skills/jc-response-setup/`，技术标识 `jc-response-setup`，版本 0.2.2，尚未上架，也尚不可提审。它锁定尚未公开的资料修订包 `JC_response-windows-x64-1.3.0-r2.zip`：程序仍是 1.3.0，相对原 1.3.0 候选未重编译，下载地址为空，导出 schema 为 `JC_response_business/1.0`。已发布的 v1.2.0-r1 只能输出技术表；三个 EXE 与该发行身份一致时，用户同意后可以由安装脚本调用现有安装器升级。业务 MCP 名称仍是 `jc-response`。
+Skill「JC回盘助手」在 `skills/jc-response-setup/`，技术标识 `jc-response-setup`，版本 0.2.2。它锁定已公开的 `JC_response-windows-x64-1.3.0-r2.zip`：程序是 1.3.0，相对原 1.3.0 候选未重编译，导出 schema 为 `JC_response_business/1.0`。已发布的 v1.2.0-r1 只能输出技术表；三个 EXE 与该发行身份一致时，用户同意后可以由安装脚本调用现有安装器升级。业务 MCP 名称仍是 `jc-response`。这份 Skill 尚未提交 WorkBuddy 审核。
 
 ## 第一次使用
 

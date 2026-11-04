@@ -94,7 +94,7 @@ def test_names_and_generated_rules() -> None:
     assert "display_name_en: JC Response Assistant" in text
     assert "name: jc-response-setup" in text
     assert "version: 0.2.2" in text
-    assert "尚不可提审" in text
+    assert "尚未提交 WorkBuddy" in text
     assert "allowed-tools:" not in text
     for name in (
         "references/business-rules.md",
@@ -122,8 +122,9 @@ def test_names_and_generated_rules() -> None:
     assert PIN["program_version"] == "1.3.0"
     assert PIN["csv_schema"] == "JC_response_business/1.0"
     assert PIN["contract"] == "response_flow/1.1"
-    assert PIN["download_url"] == ""
-    assert PIN["published"] is False
+    assert PIN["download_url"] == "https://github.com/bobbanga/jc-response/releases/download/v1.3.0-r2/JC_response-windows-x64-1.3.0-r2.zip"
+    assert PIN["published"] is True
+    assert PIN["release_tag"] == "v1.3.0-r2"
     assert PIN["file_name"] == "JC_response-windows-x64-1.3.0-r2.zip"
     assert PIN["package_revision"] == "r2"
     assert PIN["sha256"] == "747a62e46af7177cb6364461f7edc776a0797652e3e423570109b3da7c47f9c9"
@@ -135,7 +136,7 @@ def test_names_and_generated_rules() -> None:
     assert PIN["exe_sha256"] == "5a65927202043b605c48019ae552b110612c68600b745fb33af14764de4e9ff3"
     assert source_map["skill_version"] == "0.2.2"
     assert source_map["review_ready"] is False
-    assert source_map["published_download"] is False
+    assert source_map["published_download"] is True
     script = SCRIPT.read_text(encoding="utf-8").casefold()
     assert "taskkill" not in script
     assert "stop-process" not in script

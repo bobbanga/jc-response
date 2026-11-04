@@ -445,7 +445,7 @@ function Invoke-Setup {
     New-Item -ItemType Directory -Path $temp | Out-Null
     try {
         $zip = Join-Path $temp "package.zip"
-        if (-not [string]$pin["download_url"]) {
+        if ($PackagePath) {
             if ((Test-ReparsePath $PackagePath) -or -not (Test-Path -LiteralPath $PackagePath -PathType Leaf)) { Write-Output "download=local_rejected"; Write-Output "downloaded=0"; return 3 }
             if ((Get-Item -LiteralPath $PackagePath).Length -ne [int64]$pin["file_size"] -or (Get-FileSha256 $PackagePath) -ne [string]$pin["sha256"]) {
                 Write-Output "download=local_rejected"; Write-Output "downloaded=0"; return 3
@@ -454,6 +454,7 @@ function Invoke-Setup {
             Write-Output "download=pinned-local"
             Write-Output "downloaded=0"
         }
+        elseif (-not [string]$pin["download_url"]) { Write-Output "download=unpublished"; Write-Output "downloaded=0"; return 3 }
         else {
             $received = Receive-FixedZip $pin $zip
             Write-Output ("download=" + $received)

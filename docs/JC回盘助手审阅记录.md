@@ -1,6 +1,6 @@
 # JC回盘助手审阅记录
 
-日期：2026-11-04。当前候选 Skill 0.2.2，尚不可提审。没有 push、merge、发布或提交 WorkBuddy 审核。
+日期：2026-11-04。Skill 0.2.2 已推到公开仓。运行包 v1.3.0-r2 已作为预发布资产公开，公开下载核对通过。尚未提交 WorkBuddy 审核。
 
 2026-11-03 再次核对 https://open.workbuddy.cn/docs/skill 。必填 frontmatter 仍是 name、display_name、display_name_en、description、description_zh、description_en、version、author。`allowed-tools` 可选。引用方式仍是 `@references/xxx.md`。页面没有给出技能 ZIP 的字节上限。
 

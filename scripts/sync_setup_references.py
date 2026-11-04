@@ -63,7 +63,7 @@ def main() -> None:
         "business_rules_file_sha256": rules_hash,
         "runtime_pin_sha256": sha256(PIN.read_bytes().replace(b"\r\n", b"\n")),
         "review_ready": False,
-        "published_download": False,
+        "published_download": True,
         "market_adapter_not_included": True,
         "market_adapter_source_seen": "8352547331fb4838715a50095dfeeaeb959ecc52",
         "docs_checked_on": "2026-11-03",
