@@ -1,0 +1,8 @@
+# Normalize public Skill source; the release manifest restores reviewed ZIP line endings.
+skills/jc-response-setup/** text eol=lf
+skills/jc-response-setup/**/*.png binary
+scripts/*.py text eol=lf
+tests/*.py text eol=lf
+releases/skill-*/*.json text eol=lf
+releases/skill-*/*.md text eol=lf
+releases/skill-*/*.txt text eol=lf

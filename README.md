@@ -1,72 +1,77 @@
-# JC Response｜JC 回盘助手
+# JC回盘助手｜JC Response Assistant
 
-把自己 JC 账号的一批回盘带进 AI 对话，按需要查看、整理和导出。**免费本地工具，非 JC 官方产品。** 本仓公开使用说明、Skill 和分发适配；业务内核不在此仓开源。
+用自然对话读取、核对自己 JC 账号的回盘，将同一批导出为 **30 列中文 CSV**。免费分享，提供安装接入、上手教学和回盘整理。**非 JC / JCTrans 官方产品。** 本仓公开 Skill、安装编排、使用说明和分发校验；私有业务内核不在此仓开源。
 
-## 下载与当前状态
+## 当前版本与获取
 
-面向能下载 ZIP、解压和核对文件的 Windows 用户。当前程序版本 **1.3.0**，包修订 **r2**，契约 **response_flow/1.1**，导出 **JC_response_business/1.0**。它是**未签名预发布，不是稳定版承诺**。
+| 交付物 | 当前版本 | 位置 |
+|---|---|---|
+| JC回盘助手 Skill | **0.2.3**，标识 `jc-response-setup` | [公开源文件](skills/jc-response-setup/)；[发行记录](releases/skill-0.2.3/RELEASE_NOTES.md)；[SkillHub 审核页](https://skillhub.cn/skills/jc-response-setup-user-8aa5619a) |
+| Windows x64 运行程序 | **1.3.0，资料修订 r2**，未签名预发布 | [GitHub Release v1.3.0-r2](https://github.com/bobbanga/jc-response/releases/tag/v1.3.0-r2) |
 
-**[查看 Releases 和 Windows 资产](https://github.com/bobbanga/jc-response/releases)**。请选择 Assets 中的 `JC_response-windows-x64-1.3.0-r2.zip`，不要下载 GitHub 自动生成的 Source code ZIP 来安装。
+**SkillHub 已提交审核，尚未通过。** slug 是 `jc-response-setup-user-8aa5619a`，版本 0.2.3，skillId `307637`。审核页：[https://skillhub.cn/skills/jc-response-setup-user-8aa5619a](https://skillhub.cn/skills/jc-response-setup-user-8aa5619a)。SkillHub 不接收 PNG，所以上传包去掉了 `references/market-icon.png`；GitHub 源包仍保留补齐原图的要求。通过前，这个链接可能还不能打开完整详情。
 
-当前 Windows 预发布是 [v1.3.0-r2](https://github.com/bobbanga/jc-response/releases/tag/v1.3.0-r2)，不是稳定版，也不是 `latest`。下载 Assets 中的 `JC_response-windows-x64-1.3.0-r2.zip`，122402084 字节，SHA256 `747a62e46af7177cb6364461f7edc776a0797652e3e423570109b3da7c47f9c9`。它导出中文业务表 `JC_response_business/1.0`。状态见[分发记录](releases/1.3.0-r2/distribution.json)。
+**原PNG已按已审核 ZIP 补入仓库。Skill 成品 ZIP 仍未上传 Release。** 仓库打包结果与已审核 ZIP 的大小和 SHA256 一致；GitHub Release 资产仍待单独上传。已有完整上架ZIP的身份如下，不要猜GitHub下载地址。
 
-此前的 [v1.2.0-r1](https://github.com/bobbanga/jc-response/releases/tag/v1.2.0-r1) 仍然保留，只输出技术表 `JC_response/1.1`。`response_flow/1.1` 不能单独证明中文业务导出。
+- Skill文件：`jc-response-setup-0.2.3.zip`，**234614 字节**。
+- Skill SHA256：`a86a58a26831e60a05247797cde92c78ea1543faf2c8e0145b4786d73ae70e42`。
+- Windows运行包：`JC_response-windows-x64-1.3.0-r2.zip`，**122402084 字节**。
+- 运行包SHA256：`747a62e46af7177cb6364461f7edc776a0797652e3e423570109b3da7c47f9c9`。
 
-已保留的 v1.2.0-r1 身份：
+GitHub自动生成的 **Source code ZIP不是Windows安装包**；Windows大包也不是WorkBuddy技能上传包。Skill和程序分别版本化，配套契约为 `response_flow/1.1`，默认中文导出为 `JC_response_business/1.0`。本次展示同步没有修改或重编译运行程序。
 
-| 文件身份 | 固定值 |
-|---|---|
-| 文件名 | `JC_response-windows-x64-1.2.0-r1.zip` |
-| 字节数 | `122270089` |
-| ZIP SHA256 | `91b6df6dd4ae0ee4684c8d4946956ca2599294e118014837f3a339bb717be713` |
-| 三个产品 EXE SHA256 | `d665c71273a99eddab01dcd38f6cd8d192a4d42b3bdf4be0e1da26f228cf810d` |
-
-r1 没有重编译，1108 个 bin/ 文件保持不变。已有维护者报告的新装、重复安装、资料刷新和 WorkBuddy 状态验证；本版的完整真实读取/导出、文件占用失败测试仍未在该报告中完成。详见[验收补充](releases/1.2.0-r1/WINDOWS_VALIDATION.md)。
-
-Skill「JC回盘助手」在 `skills/jc-response-setup/`，技术标识 `jc-response-setup`，版本 0.2.2。它锁定已公开的 `JC_response-windows-x64-1.3.0-r2.zip`：程序是 1.3.0，相对原 1.3.0 候选未重编译，导出 schema 为 `JC_response_business/1.0`。已发布的 v1.2.0-r1 只能输出技术表；三个 EXE 与该发行身份一致时，用户同意后可以由安装脚本调用现有安装器升级。业务 MCP 名称仍是 `jc-response`。这份 Skill 尚未提交 WorkBuddy 审核。
+旧版 [v1.2.0-r1](https://github.com/bobbanga/jc-response/releases/tag/v1.2.0-r1) 保留，它只输出技术表 `JC_response/1.1`。不能仅凭 `response_flow/1.1` 推断已支持中文导出。
 
 ## 第一次使用
 
-1. 确认电脑是 **Windows x64**，有本机 Edge、可用的 WorkBuddy 桌面端和你自己的 JC 账号；当前无 macOS/Linux 安装包，也不支持网页客户端直接远程连接。
-2. 下载上面指定的 Windows 资产，校验并解压。按[快速开始](docs/快速开始.md)安装；也可把[接入提示词](docs/接入提示词.md)与解压路径交给本机 AI。**普通使用不需要安装 Python、Nuitka 或克隆私有仓。**
-3. 本人完成需要的客户端信任、JC 登录和一次范围确认。先查状态，再按自己需要读取一批。不要把密码、Cookie 或 Token 发到聊天。
+需要 **Windows x64、本机Edge、WorkBuddy桌面端的本地执行能力和自己的JC账号**。普通使用不需要Python、Nuitka或私有源码。未验证的macOS、Linux、其他AI客户端和云端环境不作兼容承诺。
+
+按当前平台实际支持的方式加载Skill，再选择一个独立任务：
 
 ```text
-只调用 jc-response 的 jctrans_status，核对契约、授权状态和登录状态；不要读取回盘。
-```
-
-状态正常、配套 Skill 确认生效后，再用一个小任务开始：
-
-```text
-使用 JC Response 读取一批 5 条回盘，不保存，不继续下一批。
+我是第一次用，帮我接入JC回盘助手，并教我怎么提问。
 ```
 
 ```text
-把刚才这批导出为 CSV，只使用同一批数据，不重新读取。
+读取一批5条回盘，整理成清单，不保存、不继续。
 ```
 
-这些是用法示例，不是宣称当前用户账号已读到数据。返回不足、权限失效或预算耗尽时如实停止。
+```text
+读取一批5条回盘及详情，导出同一批的30列中文CSV，完成后停止。
+```
+
+助手先复用已核对的安装；需要下载、安装或改配置时说明范围并取得同意。本人完成实际出现的客户端信任、JC页面登录和首次范围确认。接入核验只查状态，不自动读取。不要把密码、Cookie或Token发到聊天。
+
+第一条是接入和教学；第二条仅取列表；第三条明确读取详情并导出同一批。已有批次后仍可说“导出刚才这批，不重新读取”。缺失或隐藏字段保持为空，不猜报价、港口或联系方式。
 
 ## 已经装过旧版
 
-**不要先卸载、删除数据或退出 JC 登录。** 多个旧候选曾共用 1.2.0 版本号，必须比对文件哈希。安装器的 `already_installed` 可能只说明程序判断无需复制，**不表示说明和 Skill 已刷新**。
+**不要先卸载、删除数据、退出登录或回滚预算。** 同版本号不一定同文件；`already_installed` 不保证说明和Skill已刷新。脚本只对身份可核实的已审核旧版本升级，更高版本、未知来源、占用或配置冲突会停止。
 
-请按[升级与回退](docs/升级说明.md)或交给 [Cursor 复核与升级](docs/Cursor复核与升级.md)。保留凭证、授权、预算和已保存数据；同二进制仅资料变化时用精确白名单刷新。旧的 `jctrans-response-assistant` Skill 可能指向开发 CLI，需先备份并定向停用，不能混用。
+保护凭证、授权、预算、快照和历史文件；保留 `scys-mcp` 和其他连接。日常业务不回退全局 `jctrans` 或开发仓库。旧开发Skill冲突需先定位，经本人同意处理；产品目录含Skill文件不等于客户端已加载。
 
-## 能做什么、不能做什么
+当前说明见 [产品条件](skills/jc-response-setup/references/product-notes.md)、[升级与排障](skills/jc-response-setup/references/upgrade-and-troubleshooting.md)、[教学示例](skills/jc-response-setup/references/prompt-examples.md)。旧版 `docs/` 和 `releases/1.2.0-r1/` 保留其历史记录，不当作本版新增验收。
 
-单次明确读取 **1–20 条、1 页**，在同一批上查看已有详情、保存和导出固定 30 列 CSV。首次开通后日常范围内读取不再逐批打开许可窗口；客户端自己的审批仍由客户端决定。
+## 能力、费用和隐私
 
-滚动 24 小时内测上限为 **10 次新读取、100 记录额度、400 次上游 HTTP 尝试**，并发读取为 1。这是产品策略，不是 JC 官方额度；退出重登不清零。同批保存/导出不增加 JC 读取，但会写本地文件。
+单批数量明确，**1–20条、1页**。滚动24小时内测预算为 **10次新读取、100记录额度、400次上游HTTP尝试**，并发读取1。这是产品策略，不是JC官方额度；重登不清零。同批查看、保存和导出不增加JC读取，但保存和导出会写本地文件。
 
-不提供报价提交、应盘、消息发送、DOM 联系人、危险品自动处理、飞书写入、调度或推送；MCP 不能开通权限、提额或清零。预览字段会进入 AI 客户端，可能由云模型处理；不承诺“所有数据绝不上云”。
+不自动续读、不提交报价或应盘、不发消息、不作危险品接载或商业承诺、不采集DOM联系人、不写飞书、不调度推送；MCP不能开通、提额或清零。业务规则见 [权威业务Skill](skills/jc-response-preview/SKILL.md)。
 
-## 文档与反馈
+本助手免费分享；JC服务、AI客户端或模型可能另有费用。WorkBuddy后台价格须发布者亲自选“免费”，ZIP不会修改表单。业务字段可能由客户端云模型处理，不承诺全部数据绝不上云。程序未签名，不要求关闭系统防护。
 
-[快速开始](docs/快速开始.md) · [兼容性与排障](docs/兼容性与排障.md) · [使用说明](docs/使用说明.md) · [安全说明](docs/安全说明.md) · [产品 Skill](skills/jc-response-preview/SKILL.md)
+## 维护与反馈
 
-问题反馈使用 [GitHub Issues](https://github.com/bobbanga/jc-response/issues)。只提供版本、文件哈希、失败步骤和脱敏错误；不要附账号凭据、完整配置、数据库或业务 CSV。
+反馈到 [Issues](https://github.com/bobbanga/jc-response/issues)，提供版本、哈希、失败步骤和脱敏错误，不附凭据、完整配置、数据库或真实CSV。
 
-WorkBuddy 市场包尚在适配，**不能把本 Windows 大包直接上传到 20 MB 的连接器入口**。维护者任务：[Cursor 市场分发适配](docs/Cursor-WorkBuddy市场适配.md)。
+[0.2.3发行记录](releases/skill-0.2.3/RELEASE_NOTES.md)区分已完成同步、待补齐资源和验证范围。成品ZIP只作为Release资产，不提交Git历史；公开PNG可入仓。平台审核与仓库发布是不同状态。
 
-维护者验证：`python -m unittest discover -s tests -v`。普通用户不用运行测试或重打包。二进制只做 Release Assets，不进入 Git 历史。
+维护者命令：
+
+```text
+python -m unittest discover -s tests -v
+python scripts/sync_setup_references.py
+python scripts/pack_setup_skill.py
+```
+
+版本从SKILL.md读取，示例各不超过3条，图标和产品说明不可漏包。打包拒绝覆盖已有文件并核对已审核ZIP身份。Windows安装测试需要显式隔离测试条件，缺条件会注明跳过；静态通过不等于本轮已经执行Windows或JC业务。
