@@ -55,9 +55,18 @@ def isolated(name: str) -> dict[str, str]:
     }
 
 
-def run_file(args: list[str], env: dict | None = None) -> subprocess.CompletedProcess[str]:
+def run_file(args: list[str], env: dict | None = None, timeout: int = 120) -> subprocess.CompletedProcess[str]:
     merged = os.environ.copy()
-    for key in ("JC_TOKEN", "JC_JCB_TOKEN", "JC_PASSWORD", "JC_USERNAME", "HTTPS_PROXY", "https_proxy"):
+    for key in (
+        "JC_TOKEN",
+        "JC_JCB_TOKEN",
+        "JC_PASSWORD",
+        "JC_USERNAME",
+        "JC_RESPONSE_HOME",
+        "JC_RESPONSE_DATA_DIR",
+        "HTTPS_PROXY",
+        "https_proxy",
+    ):
         merged.pop(key, None)
     if env:
         merged.update(env)
@@ -70,7 +79,7 @@ def run_file(args: list[str], env: dict | None = None) -> subprocess.CompletedPr
         text=True,
         encoding="utf-8",
         errors="replace",
-        timeout=120,
+        timeout=timeout,
     )
 
 
@@ -84,7 +93,7 @@ def test_names_and_generated_rules() -> None:
     assert "display_name: JC回盘助手" in text
     assert "display_name_en: JC Response Assistant" in text
     assert "name: jc-response-setup" in text
-    assert "version: 0.2.1" in text
+    assert "version: 0.2.2" in text
     assert "尚不可提审" in text
     assert "allowed-tools:" not in text
     for name in (
@@ -108,17 +117,23 @@ def test_names_and_generated_rules() -> None:
     assert source_map["business_rules_source_commit"] == "feat/business-csv-rules"
     assert "JC_response_business/1.0" in rules
     assert "1.2.0-r1" in rules
+    assert "本资料修订对应程序 1.3.0" in rules
+    assert "程序版本仍为 1.2.0" not in rules
     assert PIN["program_version"] == "1.3.0"
     assert PIN["csv_schema"] == "JC_response_business/1.0"
     assert PIN["contract"] == "response_flow/1.1"
     assert PIN["download_url"] == ""
     assert PIN["published"] is False
-    assert PIN["file_name"] == "JC_response-windows-x64-1.3.0-r1.zip"
-    assert PIN["package_revision"] == "r1"
-    assert PIN["sha256"] == "1bdb2fdd5df0bdc630980784a8bcdd5fce3199a5c67aeeff2970d2fb647b32be"
-    assert PIN["file_size"] == 122402043
+    assert PIN["file_name"] == "JC_response-windows-x64-1.3.0-r2.zip"
+    assert PIN["package_revision"] == "r2"
+    assert PIN["sha256"] == "747a62e46af7177cb6364461f7edc776a0797652e3e423570109b3da7c47f9c9"
+    assert PIN["file_size"] == 122402084
+    predecessor = PIN["supported_upgrades"][0]
+    assert predecessor["program_version"] == "1.2.0"
+    assert predecessor["csv_schema"] == "JC_response/1.1"
+    assert predecessor["exe_sha256"] == "d665c71273a99eddab01dcd38f6cd8d192a4d42b3bdf4be0e1da26f228cf810d"
     assert PIN["exe_sha256"] == "5a65927202043b605c48019ae552b110612c68600b745fb33af14764de4e9ff3"
-    assert source_map["skill_version"] == "0.2.1"
+    assert source_map["skill_version"] == "0.2.2"
     assert source_map["review_ready"] is False
     assert source_map["published_download"] is False
     script = SCRIPT.read_text(encoding="utf-8").casefold()
@@ -192,7 +207,7 @@ def test_zip_and_classification(tmp: Path) -> None:
     assert result.stdout.strip().endswith("different_binary"), result.stdout
     version.write_text("version=9.9.9\nschema=response_flow/1.1\n", encoding="utf-8")
     result = dot(pin_literal + f"Get-ProgramClass '{program}' $pin")
-    assert result.stdout.strip().endswith("different_version"), result.stdout
+    assert result.stdout.strip().endswith("higher_version"), result.stdout
 
 
 def test_isolated_actions() -> None:
@@ -220,7 +235,7 @@ def test_isolated_actions() -> None:
     (program / "VERSION").write_text("version=9.9.9\nschema=other\n", encoding="utf-8")
     result = run_file(["-Action", "install", "-Confirm"], env)
     assert result.returncode == 4, result.stdout + result.stderr
-    assert "class=different_version" in result.stdout
+    assert "class=higher_version" in result.stdout
     assert "downloaded=0" in result.stdout
     config = home / ".workbuddy" / "mcp.json"
     config.parent.mkdir(parents=True, exist_ok=True)
@@ -287,6 +302,120 @@ def test_docs_and_config_helpers(tmp: Path) -> None:
     assert result.stdout.strip().endswith("invalid")
 
 
+def test_reviewed_upgrade_keeps_sentinels() -> None:
+    package = Path(r"D:\Code\work\jctrans-cli-export\dist") / PIN["file_name"]
+    digest = hashlib.sha256()
+    with package.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    assert digest.hexdigest() == PIN["sha256"]
+    assert package.stat().st_size == PIN["file_size"]
+    predecessor = PIN["supported_upgrades"][0]
+    live = Path(os.environ["LOCALAPPDATA"]) / "Programs" / "JC_response"
+    live_hashes = {
+        name: hashlib.sha256((live / "bin" / name).read_bytes()).hexdigest()
+        for name in predecessor["exe_names"]
+    }
+    assert set(live_hashes.values()) == {predecessor["exe_sha256"]}
+    assert not list(live.rglob("*.db"))
+    env = isolated("upgrade")
+    program = Path(env["LOCALAPPDATA"]) / "Programs" / "JC_response"
+    shutil.copytree(live, program)
+    data = Path(env["LOCALAPPDATA"]) / "JC_response"
+    (data / "auth").mkdir(parents=True)
+    (data / "state").mkdir()
+    export = data / "accounts" / "synthetic" / "exports"
+    export.mkdir(parents=True)
+    (data / "auth" / "sentinel.bin").write_bytes(b"synthetic-auth")
+    (data / "state" / "budget-sentinel.txt").write_text("synthetic-budget", encoding="utf-8")
+    (export / "sentinel.csv").write_text("synthetic-not-a-real-response\n", encoding="utf-8")
+    config = Path(env["USERPROFILE"]) / ".workbuddy" / "mcp.json"
+    config.parent.mkdir(parents=True)
+    original = {
+        "theme": "kept",
+        "mcpServers": {
+            "scys-mcp": {"type": "stdio", "command": "C:\\Other\\scys.exe", "env": {"nested": {"keep": True}}},
+            "jc-response": {"type": "stdio", "command": "C:\\Old\\jctrans-mcp.exe", "args": []},
+        },
+    }
+    config.write_text(json.dumps(original, ensure_ascii=False), encoding="utf-8")
+
+    def sentinels_held() -> None:
+        assert (data / "auth" / "sentinel.bin").read_bytes() == b"synthetic-auth"
+        assert (data / "state" / "budget-sentinel.txt").read_text(encoding="utf-8") == "synthetic-budget"
+        assert (export / "sentinel.csv").read_text(encoding="utf-8") == "synthetic-not-a-real-response\n"
+        current = json.loads(config.read_text(encoding="utf-8"))
+        assert current["theme"] == "kept"
+        assert current["mcpServers"]["scys-mcp"] == original["mcpServers"]["scys-mcp"]
+
+    result = run_file(
+        ["-Action", "install", "-Confirm", "-PackagePath", str(package)],
+        env,
+        timeout=900,
+    )
+    assert result.returncode == 0, result.stdout + "\n" + result.stderr
+    assert "class=supported_upgrade" in result.stdout
+    assert "install_status=upgraded" in result.stdout
+    assert "install_judged=verified" in result.stdout
+    assert "downloaded=0" in result.stdout
+    version = (program / "VERSION").read_text(encoding="utf-8")
+    assert "version=1.3.0" in version
+    assert "csv_schema=JC_response_business/1.0" in version
+    upgraded = hashlib.sha256((program / "bin" / "JC_response.exe").read_bytes()).hexdigest()
+    assert upgraded == PIN["exe_sha256"]
+    sentinels_held()
+    assert live_hashes["JC_response.exe"] == hashlib.sha256((live / "bin" / "JC_response.exe").read_bytes()).hexdigest()
+
+    guide = program / "docs" / "使用说明.md"
+    before_doc = guide.read_bytes()
+    before_exe = (program / "bin" / "JC_response.exe").read_bytes()
+    result = run_file(["-Action", "install", "-Confirm", "-PackagePath", str(package)], env, timeout=180)
+    assert result.returncode == 0, result.stdout + "\n" + result.stderr
+    assert "class=match" in result.stdout
+    assert "install=reused" in result.stdout
+    assert "downloaded=0" in result.stdout
+    assert guide.read_bytes() == before_doc
+    assert (program / "bin" / "JC_response.exe").read_bytes() == before_exe
+
+    guide.write_bytes(before_doc + "\n<!-- synthetic marker -->\n".encode("utf-8"))
+    result = run_file(
+        ["-Action", "refresh-docs", "-Confirm", "-PackagePath", str(package)],
+        env,
+        timeout=900,
+    )
+    assert result.returncode == 0, result.stdout + "\n" + result.stderr
+    assert "docs=docs_refreshed" in result.stdout
+    assert guide.read_bytes() == before_doc
+    assert (program / "bin" / "JC_response.exe").read_bytes() == before_exe
+    sentinels_held()
+
+    absent = isolated("bad-package")
+    rejected = Path(absent["TEMP"]) / "not-the-package.zip"
+    rejected.write_bytes(b"not-the-reviewed-package")
+    result = run_file(["-Action", "install", "-Confirm", "-PackagePath", str(rejected)], absent, timeout=180)
+    assert result.returncode == 3, result.stdout + "\n" + result.stderr
+    assert "download=local_rejected" in result.stdout
+    assert not (Path(absent["LOCALAPPDATA"]) / "Programs" / "JC_response").exists()
+    assert (program / "bin" / "JC_response.exe").read_bytes() == before_exe
+
+    unknown = isolated("unknown-source")
+    unknown_program = Path(unknown["LOCALAPPDATA"]) / "Programs" / "JC_response"
+    (unknown_program / "bin").mkdir(parents=True)
+    (unknown_program / "VERSION").write_text(
+        "version=1.2.0\nschema=response_flow/1.1\ncsv_schema=JC_response/1.1\n",
+        encoding="utf-8",
+    )
+    for name in predecessor["exe_names"]:
+        (unknown_program / "bin" / name).write_bytes(b"unreviewed-bytes")
+    result = run_file(["-Action", "install", "-Confirm", "-PackagePath", str(package)], unknown, timeout=180)
+    assert result.returncode == 4, result.stdout + "\n" + result.stderr
+    assert "class=unknown" in result.stdout
+    assert "downloaded=0" in result.stdout
+    assert (unknown_program / "bin" / "JC_response.exe").read_bytes() == b"unreviewed-bytes"
+    sentinels_held()
+    assert live_hashes["JC_response.exe"] == hashlib.sha256((live / "bin" / "JC_response.exe").read_bytes()).hexdigest()
+
+
 class SetupSkill(unittest.TestCase):
     def test_candidate_package(self) -> None:
         main()
@@ -302,6 +431,7 @@ def main() -> None:
     test_zip_and_classification(tmp)
     test_isolated_actions()
     test_docs_and_config_helpers(tmp)
+    test_reviewed_upgrade_keeps_sentinels()
     print("setup skill tests ok")
 
 

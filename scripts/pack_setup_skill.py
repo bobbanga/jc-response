@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / "skills" / "jc-response-setup"
-OUT = ROOT / "dist" / "jc-response-setup-0.2.1-candidate.zip"
+OUT = ROOT / "dist" / "jc-response-setup-0.2.2-candidate.zip"
 NAMES = [
     "SKILL.md",
     "scripts/setup-windows.ps1",

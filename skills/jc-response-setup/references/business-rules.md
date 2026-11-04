@@ -6,7 +6,7 @@
 
 来源文件：skills/jc-response-preview/SKILL.md
 
-来源 SHA256：c49e824e3409ec8af2dabfeea01851c3027ab0d71084947f955e2451a6387130
+来源 SHA256：437ca1e3befbefb55e141232090ed5c9853dc29bc201ccf187bd7b2b38a910b4
 
 ---
 
@@ -16,7 +16,7 @@
 
 业务 Skill 版本是 1.0.0。它随程序 1.3.0 分发，不等于程序版本，也不等于安装 Skill `jc-response-setup`。中文导出以 `csv_schema=JC_response_business/1.0` 为准。
 
-随包资料修订：r1。程序版本仍为 1.2.0，未因本次资料修订而重编译。升级要核对客户端实际加载文件，不只看安装目录。
+本资料修订对应程序 1.3.0；相对于原 1.3.0 候选包未重编译。资料修订号以 RELEASE-METADATA.json 为准。升级要核对客户端实际加载文件，不只看安装目录。
 
 ## 先识别版本和契约
 

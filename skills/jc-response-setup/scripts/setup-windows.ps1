@@ -1,7 +1,8 @@
 param(
     [ValidateSet("inspect", "install", "refresh-docs", "configure")]
     [string]$Action = "inspect",
-    [switch]$Confirm
+    [switch]$Confirm,
+    [string]$PackagePath = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -63,6 +64,58 @@ function Test-SumsFile([string]$Root, [string]$SumsPath) {
     return $true
 }
 
+function Get-VersionRank([string]$Text) {
+    $parts = @()
+    foreach ($piece in ([string]$Text).Split(".")) {
+        if (-not $piece) { return $null }
+        $number = 0
+        if (-not [int]::TryParse($piece, [ref]$number)) { return $null }
+        $parts += $number
+    }
+    if ($parts.Count -eq 0) { return $null }
+    return ,$parts
+}
+
+function Compare-VersionRank([string]$Left, [string]$Right) {
+    $a = Get-VersionRank $Left
+    $b = Get-VersionRank $Right
+    if ($null -eq $a -or $null -eq $b) { return 0 }
+    $count = [Math]::Max($a.Count, $b.Count)
+    for ($i = 0; $i -lt $count; $i++) {
+        $av = 0
+        $bv = 0
+        if ($i -lt $a.Count) { $av = [int]$a[$i] }
+        if ($i -lt $b.Count) { $bv = [int]$b[$i] }
+        if ($av -gt $bv) { return 1 }
+        if ($av -lt $bv) { return -1 }
+    }
+    return 0
+}
+
+function Test-ReviewedPredecessor([string]$Root, $Info, $Pin) {
+    $entries = $Pin["supported_upgrades"]
+    if (-not $entries) { return $false }
+    foreach ($entry in @($entries)) {
+        if ([string]$entry["program_version"] -ne $Info.version) { continue }
+        if ([string]$entry["contract"] -ne $Info.contract) { continue }
+        $csv = [string]$entry["csv_schema"]
+        if ($csv -and $Info.csv_schema -ne $csv) { continue }
+        $hash = [string]$entry["exe_sha256"]
+        $names = @($entry["exe_names"])
+        if (-not $hash -or $names.Count -eq 0) { continue }
+        $matched = $true
+        foreach ($name in $names) {
+            $exe = Join-Path $Root ("bin\" + [string]$name)
+            if ((Test-ReparsePath $exe) -or -not (Test-Path -LiteralPath $exe -PathType Leaf) -or ((Get-FileSha256 $exe) -ne $hash)) {
+                $matched = $false
+                break
+            }
+        }
+        if ($matched) { return $true }
+    }
+    return $false
+}
+
 function Get-ProgramClass([string]$Root, $Pin) {
     if (Test-ReparsePath $Root) { return "reparse" }
     if (-not (Test-Path -LiteralPath $Root)) { return "absent" }
@@ -71,7 +124,11 @@ function Get-ProgramClass([string]$Root, $Pin) {
     }
     $info = Read-VersionFile (Join-Path $Root "VERSION")
     $expected = [string]$Pin["program_version"]
-    if ($info.version -and $info.version -ne $expected) { return "different_version" }
+    if ($info.version -and $info.version -ne $expected) {
+        if ((Compare-VersionRank $info.version $expected) -gt 0) { return "higher_version" }
+        if (Test-ReviewedPredecessor $Root $info $Pin) { return "supported_upgrade" }
+        return "unknown"
+    }
     $exeHash = [string]$Pin["exe_sha256"]
     $exeOk = $true
     foreach ($name in @($Pin["exe_names"])) {
@@ -380,18 +437,29 @@ function Invoke-Setup {
         return 0
     }
     if ($class -eq "match") { Write-Output "downloaded=0"; Write-Output "install=reused"; return 0 }
-    if ($class -eq "different_version" -or $class -eq "unknown" -or $class -eq "reparse" -or $class -eq "mixed") {
+    if ($class -eq "higher_version" -or $class -eq "unknown" -or $class -eq "reparse" -or $class -eq "mixed") {
         Write-Output "install=stopped"; Write-Output "downloaded=0"; return 4
     }
-    if (-not [string]$pin["download_url"]) { Write-Output "download=unpublished"; Write-Output "downloaded=0"; return 3 }
+    if (-not [string]$pin["download_url"] -and -not $PackagePath) { Write-Output "download=unpublished"; Write-Output "downloaded=0"; return 3 }
     $temp = Join-Path $env:TEMP ("jc-response-setup-" + [guid]::NewGuid().ToString("N"))
     New-Item -ItemType Directory -Path $temp | Out-Null
     try {
         $zip = Join-Path $temp "package.zip"
-        $received = Receive-FixedZip $pin $zip
-        Write-Output ("download=" + $received)
-        if ($received -ne "ok") { Write-Output "downloaded=0"; return 3 }
-        Write-Output "downloaded=1"
+        if (-not [string]$pin["download_url"]) {
+            if ((Test-ReparsePath $PackagePath) -or -not (Test-Path -LiteralPath $PackagePath -PathType Leaf)) { Write-Output "download=local_rejected"; Write-Output "downloaded=0"; return 3 }
+            if ((Get-Item -LiteralPath $PackagePath).Length -ne [int64]$pin["file_size"] -or (Get-FileSha256 $PackagePath) -ne [string]$pin["sha256"]) {
+                Write-Output "download=local_rejected"; Write-Output "downloaded=0"; return 3
+            }
+            Copy-Item -LiteralPath $PackagePath -Destination $zip -Force
+            Write-Output "download=pinned-local"
+            Write-Output "downloaded=0"
+        }
+        else {
+            $received = Receive-FixedZip $pin $zip
+            Write-Output ("download=" + $received)
+            if ($received -ne "ok") { Write-Output "downloaded=0"; return 3 }
+            Write-Output "downloaded=1"
+        }
         $extract = Join-Path $temp "extract"
         if (-not (Expand-CheckedZip $zip $extract)) { Write-Output "zip=rejected"; return 3 }
         if (-not (Test-ReleaseExes $extract $pin)) { Write-Output "release_exe_mismatch"; return 3 }

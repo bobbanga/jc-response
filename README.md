@@ -19,7 +19,7 @@
 
 r1 没有重编译，1108 个 bin/ 文件保持不变。已有维护者报告的新装、重复安装、资料刷新和 WorkBuddy 状态验证；本版的完整真实读取/导出、文件占用失败测试仍未在该报告中完成。详见[验收补充](releases/1.2.0-r1/WINDOWS_VALIDATION.md)。
 
-候选 Skill「JC回盘助手」在 `skills/jc-response-setup/`，技术标识 `jc-response-setup`，版本 0.2.1，尚未上架，也尚不可提审。它锁定尚未公开的资料修订包 `JC_response-windows-x64-1.3.0-r1.zip`：程序仍是 1.3.0，下载地址为空，导出 schema 为 `JC_response_business/1.0`。已发布的 v1.2.0-r1 只能输出技术表，看到它时要提示升级。业务 MCP 名称仍是 `jc-response`。
+候选 Skill「JC回盘助手」在 `skills/jc-response-setup/`，技术标识 `jc-response-setup`，版本 0.2.2，尚未上架，也尚不可提审。它锁定尚未公开的资料修订包 `JC_response-windows-x64-1.3.0-r2.zip`：程序仍是 1.3.0，相对原 1.3.0 候选未重编译，下载地址为空，导出 schema 为 `JC_response_business/1.0`。已发布的 v1.2.0-r1 只能输出技术表；三个 EXE 与该发行身份一致时，用户同意后可以由安装脚本调用现有安装器升级。业务 MCP 名称仍是 `jc-response`。
 
 ## 第一次使用
 
