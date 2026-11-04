@@ -1,6 +1,6 @@
 {
   "skill_id": "jc-response-setup",
-  "skill_version": "0.2.2",
+  "skill_version": "0.2.3",
   "skill_maturity": "candidate",
   "display_name": "JC回盘助手",
   "display_name_en": "JC Response Assistant",
@@ -21,5 +21,42 @@
     "https://open.workbuddy.cn/docs/developer-agreement",
     "https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Skills-Market",
     "https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/MCP-Guide"
-  ]
+  ],
+  "presentation_update": {
+    "date": "2026-11-04",
+    "kind": "local_market_presentation_package",
+    "base_archive": "jc-response-setup-0.2.2-uploadfix.zip",
+    "base_archive_sha256": "2f26d06cd5211a4610b05c12a3e965c3e25e73abbf24d39c4458dcc1fce921ee",
+    "source_repository_updated": false,
+    "market_submitted": false,
+    "pricing_intent": "free",
+    "pricing_requires_console_selection": true,
+    "version_note": "Only Skill presentation, guided examples and disclosures were revised. Runtime identity is unchanged.",
+    "official_skill_spec_checked": "https://open.workbuddy.cn/docs/skill",
+    "examples_zh_count": 3,
+    "examples_en_count": 3,
+    "icon_file": "references/market-icon.png",
+    "icon_sha256": "ba094f4149d26dd5521bb2052856bee71902fb43f7b4fc11ec87a1c8ed41cfde",
+    "icon_size_px": [
+      512,
+      512
+    ],
+    "icon_size_bytes": 210492,
+    "changed_files": [
+      "SKILL.md",
+      "references/first-use.md",
+      "references/prompt-examples.md",
+      "references/source-map.json"
+    ],
+    "added_files": [
+      "references/product-notes.md",
+      "references/market-icon.png"
+    ]
+  },
+  "presentation_files_sha256": {
+    "SKILL.md": "e41709ff8500278ea16e8cf987f61605a0da7bb79ccc1d921d5d44895d5a68ed",
+    "references/first-use.md": "bfd569e0b192e174cececb856325dd88bb01e30b5475412261a471320bf14fca",
+    "references/prompt-examples.md": "90f6d91f8c704a7d33fdfc8400683ca0ff446a92982fb4a52e7acd5dc48dd5d1",
+    "references/product-notes.md": "099bd83bb0a8ea45ca038b189ac20fa1d021ff1a891a8e91e181d5d1b8eb9412"
+  }
 }
