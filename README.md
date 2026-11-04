@@ -6,8 +6,10 @@
 
 | 交付物 | 当前版本 | 位置 |
 |---|---|---|
-| JC回盘助手 Skill | **0.2.3**，标识 `jc-response-setup` | [公开源文件](skills/jc-response-setup/)；[发行记录](releases/skill-0.2.3/RELEASE_NOTES.md) |
+| JC回盘助手 Skill | **0.2.3**，标识 `jc-response-setup` | [公开源文件](skills/jc-response-setup/)；[发行记录](releases/skill-0.2.3/RELEASE_NOTES.md)；[SkillHub 审核页](https://skillhub.cn/skills/jc-response-setup-user-8aa5619a) |
 | Windows x64 运行程序 | **1.3.0，资料修订 r2**，未签名预发布 | [GitHub Release v1.3.0-r2](https://github.com/bobbanga/jc-response/releases/tag/v1.3.0-r2) |
+
+**SkillHub 已提交审核，尚未通过。** slug 是 `jc-response-setup-user-8aa5619a`，版本 0.2.3，skillId `307637`。审核页：[https://skillhub.cn/skills/jc-response-setup-user-8aa5619a](https://skillhub.cn/skills/jc-response-setup-user-8aa5619a)。SkillHub 不接收 PNG，所以上传包去掉了 `references/market-icon.png`；GitHub 源包仍保留补齐原图的要求。通过前，这个链接可能还不能打开完整详情。
 
 **本次源同步为草稿PR：原PNG图标尚待补传，Skill成品ZIP尚未上传Release。** 补齐前，仓库打包命令会拒绝缺失资源，不生成不完整替代包。已有完整上架ZIP的身份如下，不要猜GitHub下载地址。
 
