@@ -7,6 +7,7 @@
 | 交付物 | 当前版本 | 位置 |
 |---|---|---|
 | JC回盘助手 Skill | **0.2.3**，标识 `jc-response-setup` | [公开源文件](skills/jc-response-setup/)；[发行记录](releases/skill-0.2.3/RELEASE_NOTES.md)；[SkillHub 审核页](https://skillhub.cn/skills/jc-response-setup-user-8aa5619a) |
+| WorkBuddy 分享 | **0.2.3** | [JC回盘助手](https://www.workbuddy.cn/share/asset?shareCode=EHSyoQRgdouSGBz2K0ncNd&sig=vMDt3EkYRj2UlOJ3) |
 | Windows x64 运行程序 | **1.3.0，资料修订 r2**，未签名预发布 | [GitHub Release v1.3.0-r2](https://github.com/bobbanga/jc-response/releases/tag/v1.3.0-r2) |
 
 **SkillHub 已提交审核，尚未通过。** slug 是 `jc-response-setup-user-8aa5619a`，版本 0.2.3，skillId `307637`。审核页：[https://skillhub.cn/skills/jc-response-setup-user-8aa5619a](https://skillhub.cn/skills/jc-response-setup-user-8aa5619a)。SkillHub 不接收 PNG，所以上传包去掉了 `references/market-icon.png`；GitHub 源包仍保留补齐原图的要求。通过前，这个链接可能还不能打开完整详情。
@@ -25,6 +26,8 @@ GitHub自动生成的 **Source code ZIP不是Windows安装包**；Windows大包�
 ## 第一次使用
 
 需要 **Windows x64、本机Edge、WorkBuddy桌面端的本地执行能力和自己的JC账号**。普通使用不需要Python、Nuitka或私有源码。未验证的macOS、Linux、其他AI客户端和云端环境不作兼容承诺。
+
+在 WorkBuddy 里打开 [JC回盘助手分享页](https://www.workbuddy.cn/share/asset?shareCode=EHSyoQRgdouSGBz2K0ncNd&sig=vMDt3EkYRj2UlOJ3)。这是 0.2.3 的分享入口，不代替 Windows 运行包，也还不是 GitHub Release 里的 Skill ZIP。
 
 按当前平台实际支持的方式加载Skill，再选择一个独立任务：
 
